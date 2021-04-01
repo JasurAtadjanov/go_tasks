@@ -27,6 +27,9 @@ func main() {
 	// we will display all Automor number between 1 and a
         var a int = 1000000
 
+	// Checking parameter if it is Automor
+	fmt.Println(a, " is ", isAutomor(a));
+	
 	for i := 1; i <= a; i++ {
 	  if isAutomor(i) {
 	    fmt.Println(i);
