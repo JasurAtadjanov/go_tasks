@@ -12,7 +12,7 @@ func main() {
 		return;
 	}
 	str = strings.ToLower(str)
-	b := regexp.MustCompile(`,|( )|-|!|\.|\?`)
+	b := regexp.MustCompile(`,|( )|-|!|\.|:|\?`)
 	items := b.Split(str, -1)
 	mItems := map[string]int{}
 	word := ""
