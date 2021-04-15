@@ -28,6 +28,7 @@ func main() {
 		word = strings.Trim(items[i], " ")
 		if val, ok := mItems[word]; ok {
 			fmt.Printf("%s (%d) ", word, val)
+			delete(mItems, word)
 		}
 	}
 
