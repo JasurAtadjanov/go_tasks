@@ -34,6 +34,24 @@ func createNewTask(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(getAllTasks())
 }
 
+func editTask(w http.ResponseWriter, r *http.Request) {
+	// get the body of our POST request
+	// unmarshal this and add to DB
+	reqBody, _ := ioutil.ReadAll(r.Body)
+	vars := mux.Vars(r)
+	id, err := strconv.ParseInt(vars["id"], 10, 0)
+
+	CheckError(err)
+
+	var task Task
+	json.Unmarshal(reqBody, &task)
+	fmt.Println("Endpoint Hit: Task: ", task)
+
+	updateTask(id, task)
+
+	json.NewEncoder(w).Encode(getAllTasks())
+}
+
 func deleteTask(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id, err := strconv.ParseInt(vars["id"], 10, 0)
@@ -60,6 +78,7 @@ func handleRequest() {
 	myRouter.HandleFunc("/", homePage)
 	myRouter.HandleFunc("/tasks", returnAllTasks)
 	myRouter.HandleFunc("/task", createNewTask).Methods("POST")
+	myRouter.HandleFunc("/task/{id}", editTask).Methods("PUT")
 	myRouter.HandleFunc("/task/{id}", deleteTask).Methods("DELETE")
 	myRouter.HandleFunc("/tasks/{id}", returnSingleTask)
 	log.Fatal(http.ListenAndServe(":81", myRouter))

@@ -51,6 +51,13 @@ func createTask(task Task) {
 	CheckError(e)
 }
 
+func updateTask(id int64, task Task) {
+	insertStmt := `update task set name = $1, description = $2, duedate = $3, status = $4 where id_ = $5`
+	fmt.Println("New Task inserting")
+	_, e := db.Exec(insertStmt, task.Name, task.Description, task.Duedate, task.Status, id)
+	CheckError(e)
+}
+
 func delTask(id int64) {
 	delStmt := `delete from task where id_ = $1`
 	fmt.Println("Deleting Task:", id)
